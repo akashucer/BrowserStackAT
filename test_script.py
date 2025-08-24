@@ -17,11 +17,20 @@ def driver():
 
 def login(driver):
     driver.get("https://bstackdemo.com/signin")
-    username = driver.find_element(By.ID, "username")
-    password = driver.find_element(By.ID, "password")
-    username.send_keys("demouser")
-    password.send_keys("testingisfun99")
-    driver.find_element(By.ID, "login-btn").click()
+    username_dropdown = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//div[contains(text(),'Select Username')]")))
+    username_dropdown.click()
+    fav_user = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//div[contains(text(),"fav_user")]')))
+    fav_user.click()
+    password_dropdown = password_dropdown = driver.find_element(By.XPATH, "//div[contains(text(),'Select Password')]")
+    password_dropdown.click()
+    fav_password = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//div[contains(text(),"testing")]')))
+    fav_password.click()
+    submit_btn = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, "login-btn")))
+    submit_btn.click()
+    logo = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "//img[@class='Navbar_logo__image__3Blki']")))
+    assert logo.is_displayed()
+    driver.save_screenshot("/Users/akashdeepsingh/Desktop/Broswerstack/screenshots/afterlogin.png")
+    logo.click()
 
 
 #Tests
@@ -72,7 +81,7 @@ def test_check_filter(driver):
     time.sleep(1)
     driver.save_screenshot("/Users/akashdeepsingh/Desktop/Broswerstack/screenshots/sort_by_price.png")
 
-'''FIX FROM HERE'''
+
 def test_add_to_cart(driver):
     add_to_cart_btn = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '(//div[contains(text(),"Add to cart")])[1]')))
     add_to_cart_btn.click()
@@ -80,7 +89,16 @@ def test_add_to_cart(driver):
     checkout_btn = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//div[contains(text(),"Checkout")]')))
     driver.save_screenshot("/Users/akashdeepsingh/Desktop/Broswerstack/screenshots//add_to_cart.png")
     checkout_btn.click()
-    login(driver)
+    username_dropdown = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//div[contains(text(),'Select Username')]")))
+    username_dropdown.click()
+    fav_user = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//div[contains(text(),"fav_user")]')))
+    fav_user.click()
+    password_dropdown = password_dropdown = driver.find_element(By.XPATH, "//div[contains(text(),'Select Password')]")
+    password_dropdown.click()
+    fav_password = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//div[contains(text(),"testing")]')))
+    fav_password.click()
+    submit_btn = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, "login-btn")))
+    submit_btn.click()
     stack_demo_text = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, '//a[contains(text(),"Stack")]')))
     driver.save_screenshot("/Users/akashdeepsingh/Desktop/Broswerstack/screenshots/checkout.png")
     first_name = driver.find_element(By.ID, 'firstNameInput').send_keys("Akash")
@@ -96,7 +114,7 @@ def test_add_to_cart(driver):
     continue_shop_btn.click()
 
 def test_verify_order_placed(driver):
-    login(driver)
+    test_add_to_cart(driver)
     orders_Tab = driver.find_element(By.XPATH, '//strong[contains(text(),"Orders")]')
     orders_Tab.click()
     Order_Placed_date = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, '(//span[@class="a-color-secondary value"])[1]')))
