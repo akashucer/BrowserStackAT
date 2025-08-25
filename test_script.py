@@ -96,7 +96,7 @@ def test_check_filter(driver):
         time.sleep(1)
         allure.attach(driver.get_screenshot_as_png(), name="price_assertion", attachment_type=allure.attachment_type.PNG)
 
-#Fix these Two
+
 @allure.title("Verify if user is able to add items in the cart")
 @allure.description("Verify that user can add items to the cart and complete the checkout process.")
 @allure.severity(allure.severity_level.BLOCKER)
@@ -107,7 +107,7 @@ def test_add_to_cart(driver):
             EC.element_to_be_clickable((By.XPATH, '(//div[contains(text(),"Add to cart")])[1]'))
         )
         add_to_cart_btn.click()
-
+    time.sleep(1)
     with allure.step("Verify Bag text and click Checkout"):
         Bag_text = WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.XPATH, '//span[contains(text(),"Bag")]'))
